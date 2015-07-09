@@ -9,6 +9,7 @@ var { Link } = require('react-router');
 var App = React.createClass({
 
     render: function() {
+        //console.log(this.props);
         return <div className="app-container">
             <div className="header">
                 <Link className="title" to="tasks">TODO</Link>

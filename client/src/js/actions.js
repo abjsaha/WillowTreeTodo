@@ -21,20 +21,32 @@ var TaskActions = {
 
     // Fetch all tasks from the server
     all: function() {
+        console.log("all:");
+        console.log(this.props.tasks);
+        return this.dispatch('ALL');
     },
-
     // Update a single task
     update: function(id, params) {
+        this.dispatch('UP',{pos:id,latest:params});
+        console.log("update action");
     },
 
     // Add a new task
     add: function(params) {
+        this.dispatch('ADD',params);
+        console.log("add action");
     },
 
     // Delete a task by id
     remove: function(id) {
+        this.dispatch('REM',id);
+        console.log("rem action");
+    },
+    //toggle status
+    toggle: function(id){
+        this.dispatch('TOG',id);
+        console.log("toggle action");
     }
-
 };
 
 module.exports = TaskActions;

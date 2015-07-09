@@ -8,10 +8,16 @@ var TaskList = React.createClass({
 
     componentWillMount: function() {
     },
-
     render: function() {
-        return <div className="list-container">
-        </div>;
+    	var mappedTasks=this.props.tasks.map(function(task){
+    		return(
+    				<TaskItem id={task.id} status={task.status}>
+    					{task.txt}
+    				</TaskItem>
+    			);
+    	});
+        return (<div className="list-container">{mappedTasks}
+        </div>);
     }
 
 });
