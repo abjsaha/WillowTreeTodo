@@ -1,0 +1,40 @@
+///*------------------------------------*\
+//    #COLORS
+//\*------------------------------------*/
+
+// Naming suggestions: http://www.color-blindness.com/color-name-hue/
+
+$color-transparent: rgba(0, 0, 0, 0);
+
+$color-white: #fff;
+$color-true-black: #000;
+$color-black: #333;
+
+$color-grey: #ccc;
+$color-grey-light: #cbcbcb;
+$color-grey-dark: #555555;
+
+$color-blue: #0D9FCB;
+$color-blue-dark: darken($color-blue, 10%);
+$color-blue-light: lighten($color-blue, 50%);
+
+
+$color-red: #ed3d3d;
+
+
+// UI Specific Colors
+$color-borders: $color-grey-light;
+$color-borders-active: $color-blue;
+
+$color-backgrounds: $color-white;
+$color-text: $color-grey-dark;
+
+
+
+///*------------------------------------*\
+//    #COLOR ASSIGNMENTS
+//\*------------------------------------*/
+
+// See settings.default for defintions of:
+// $inuit-base-text-color
+// $inuit-base-background-color
