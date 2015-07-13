@@ -2,7 +2,7 @@
 
 var React = require('react');
 var { flux } = require('flux');
-
+var R = require('ramda');
 var TaskItem = React.createClass({
 
     toggle: function() {

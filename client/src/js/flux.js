@@ -19,3 +19,5 @@ module.exports = {
     StoreWatchMixin: StoreWatchMixin
 };
 
+
+window.flux = module.exports.flux;

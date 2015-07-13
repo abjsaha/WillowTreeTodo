@@ -20,8 +20,9 @@ var TaskAdd = React.createClass({
         if(!taskText)
             return;
         var todo={
-            txt:taskText,
-            status:0
+            txt: taskText,
+            status: false,
+            removed: false
         };
         flux.actions.add(todo);
         //flux.actions.all();

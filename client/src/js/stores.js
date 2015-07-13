@@ -2,6 +2,10 @@
 
 var Tuxxor = require('tuxxor');
 
+var R = require('ramda');
+
+console.log(R.where)
+
 var TaskStore = Tuxxor.createStore({
 
     initialize: function() {
@@ -18,7 +22,8 @@ var TaskStore = Tuxxor.createStore({
         remove: 'REM',
         update: 'UP',
         all: 'ALL',
-        toggle:'TOG'
+        toggle:'TOG',
+        emitAChange: 'EMIT'
     },
     toggle: function(id)
     {
@@ -34,7 +39,7 @@ var TaskStore = Tuxxor.createStore({
     },
     all: function()
     {
-        return this.tasks;
+        return TaskStore.getState();
     },
     set: function (tasks) {
         this.tasks=tasks;
@@ -53,7 +58,7 @@ var TaskStore = Tuxxor.createStore({
     },
 
     add: function(task) {
-        task["id"]=this.counter;
+        task.id = this.counter;
         this.tasks.push(task);
         this.counter++;
         console.log("add store");
@@ -71,9 +76,41 @@ var TaskStore = Tuxxor.createStore({
         console.log("remove:");
         console.log(id);
         console.log(value);
-        this.tasks.splice(this.tasks.indexOf(value),1);
+        console.log(this.tasks);
+        this.tasks[this.tasks.indexOf(value[0])].removed = true;
+        console.log(this.tasks[this.tasks.indexOf(value[0])].removed);
         this.emit('change');
     },
+
+    isRemoved: R.whereEq({ removed: true }),
+
+    isComplete: R.whereEq({ status: true }),
+
+    allRemoved: R.filter(this.isRemoved),
+
+    allNotRemoved: R.reject(this.isRemoved),
+
+    allUnfinished: R.filter(this.isComplete),
+
+    allFinished: R.reject(this.isComplete),
+
+    search: function(arr) {
+      return function(prop) {
+            return function(input) {
+                var has = R.propEq(prop, input);
+                return R.filter(has, arr);
+            };
+        };
+    },
+
+    sortByComplete: R.sortBy(R.prop('status')),
+
+    sortByText: R.sortBy(R.compose(R.toLower, R.prop('txt'))),
+
+    nonRemovedAreFinished: function() {
+        return R.compose(R.all(R.prop('complete')), this.allRemoved);
+    },
+
 
     // This is our public facing get method for the store. Any
     // component can call getState to get the list of tasks.
@@ -82,6 +119,9 @@ var TaskStore = Tuxxor.createStore({
     // we are protected from others modifying our state
     getState: function() {
         return this.tasks.slice(0);
+    },
+    emitAChange: function() {
+        this.emit('change');
     }
 });
 

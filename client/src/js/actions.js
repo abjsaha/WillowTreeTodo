@@ -46,6 +46,10 @@ var TaskActions = {
     toggle: function(id){
         this.dispatch('TOG',id);
         console.log("toggle action");
+    },
+
+    emitAChange: function() {
+        this.dispatch('EMIT');
     }
 };
 
