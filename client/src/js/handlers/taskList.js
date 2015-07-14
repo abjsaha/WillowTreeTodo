@@ -10,15 +10,21 @@ var TaskList = React.createClass({
 
     getInitialState: function() {
         return {
-            value1: 'Show All Removed',
-            filt: flux.stores.TaskStore.allNotRemoved,
-            sort: flux.stores.TaskStore.sortByText,
-            filt2: flux.stores.TaskStore.allUnfinished,
-            value2: 'Show All Finished',
-            value3: 'Sort by Complete Status',
-            searchFlag: false,
+            //value1: 'Show All Removed',
+            //filt: flux.stores.TaskStore.allNotRemoved,
+            //sort: flux.stores.TaskStore.sortByText,
+            //filt2: flux.stores.TaskStore.allUnfinished,
+            //value2: 'Show All Finished',
+            //value3: 'Sort by Complete Status',
+            //searchFlag: false,
+            //searchValue: '',
+            //showAllFlag: true,
             searchValue: '',
-            showAllFlag: true,
+            filters: {
+                status: false,
+                removed: false
+            },
+            sort: 'txt'
         };
     },
 
@@ -71,58 +77,103 @@ var TaskList = React.createClass({
         this.setState({ showAllFlag: false });
     },
 
-    render: function() {
-        console.log("Props in taskslist : ");
-        console.log(this.props.tasks);
-        console.log(this.state.filt);
-        var Tasks;
-        var searchFilter;
-        if(!this.state.searchFlag) {
-            searchFilter=this.props.tasks;
-        }
-        else {
-            searchFilter = flux.stores.TaskStore.search(this.props.tasks)('txt')(this.state.searchValue);
-            console.log("Search Result: ");
-        }
-        console.log(searchFilter);
+    test: function() {
+        // Filters
+        var filters = {
+            status: React.findDOMNode(this.refs.complete).checked,
+            removed: React.findDOMNode(this.refs.removed).checked
+        };
 
-        Tasks = R.compose(
+        // Sorts
+        var sort = React.findDOMNode(this.refs.sortTxt).checked ?  'txt' : 'complete';
+
+        // Search
+        var searchValue = React.findDOMNode(this.refs.search).value;
+
+        this.setState({
+            filters: filters,
+            sort: sort,
+            searchValue: searchValue
+        });
+    },
+
+    clearAll: function() {
+        this.setState(this.getInitialState());
+    },
+
+    render: function() {
+
+        //+ searchPredicate :: obj -> boolean
+        var searchPredicate = R.compose(R.test(new RegExp(this.state.searchValue, 'i')), R.prop('txt'));
+
+        var filterPredicate = R.whereEq(this.state.filters);
+
+        var sortComparator = R.compose(R.toLower, R.toString, R.prop(this.state.sort));
+
+
+        var Tasks = R.compose(
+            // Map the task to a Component
             R.map((task) => {
                 return <TaskItem removed={task.removed} id={task.id} status={task.status}>
                     {task.txt}
                 </TaskItem>
             }),
-            this.state.sort,
-            this.state.filt2,
-            this.state.filt
-        )(searchFilter);
+            // Sort the todos
+            R.sortBy(sortComparator),
+            // Filter the todos
+            R.filter(filterPredicate),
+            // Search the todos
+            R.filter(searchPredicate)
+        )(this.props.tasks);
 
-        if(this.state.showAllFlag && !this.state.searchFlag)
-            Tasks = R.compose(R.map((task) => {
-                            return <TaskItem removed={task.removed} id={task.id} status={task.status}>
-                                {task.txt}
-                            </TaskItem>
-                        }), this.state.sort)(this.props.tasks);
-        console.log(Tasks);
+        //console.log("Props in taskslist : ");
+        //console.log(this.props.tasks);
+        //console.log(this.state.filt);
+        //var Tasks;
+        //var searchFilter;
+        //if(!this.state.searchFlag) {
+            //searchFilter=this.props.tasks;
+        //}
+        //else {
+            //searchFilter = flux.stores.TaskStore.search(this.props.tasks)('txt')(this.state.searchValue);
+            //console.log("Search Result: ");
+        //}
+        //console.log(searchFilter);
+
+        //Tasks = R.compose(
+            //R.map((task) => {
+                //return <TaskItem removed={task.removed} id={task.id} status={task.status}>
+                    //{task.txt}
+                //</TaskItem>
+            //}),
+            //this.state.sort,
+            //this.state.filt2,
+            //this.state.filt
+        //)(searchFilter);
+
+        //if(this.state.showAllFlag && !this.state.searchFlag)
+            //Tasks = R.compose(R.map((task) => {
+                            //return <TaskItem removed={task.removed} id={task.id} status={task.status}>
+                                //{task.txt}
+                            //</TaskItem>
+                        //}), this.state.sort)(this.props.tasks);
+        //console.log(Tasks);
         return (<div className="overlay">
             <div className="list-container">
-                {Tasks}
-                <button onClick={this.onClickShowAllRemoved}>{this.state.value1}</button>
-                <button onClick={this.onClickUnfinished}>{this.state.value2}</button>
-                <button onClick={this.onClickSort}>{this.state.value3}</button>
-                <button onClick={this.onClickShowAll}>Show All</button>
-                
-                <form>
-                <label><input type="checkbox" /> <span>Complete</span></label>
-                <label><input type="checkbox" /> <span>Removed</span></label>
+                <form onChange={this.test}>
+                    <label><input ref="complete" type="checkbox" checked={this.state.filters.status} /><span>Complete</span></label>
+                    <label><input ref="removed" type="checkbox" checked={this.state.filters.removed} /><span>Removed</span></label>
+                    <label><input ref="sortTxt" type="radio" name="sort" value="txt" checked={this.state.sort === 'txt'} /><span>Text</span></label>
+                    <label><input ref="sortComplete" type="radio" name="sort" value="complete" checked={this.state.sort === 'complete'} /><span>Complete</span></label>
 
-                <label><input type="radio" name="sort" value="txt" /> <span>Text</span></label>
-                <label><input type="radio" name="sort" value="complete" /> <span>Complete</span></label>
+                    <input ref="search" type="text" placeholder="Search..." value={this.state.searchValue} />
+
+                    <span className="clear" onClick={this.clearAll}>Clear Filters</span>
                 </form>
-            </div>
-            <div className="search-bar">
-                <input ref="input" type="text" onChange={this.onChange} placeholder="Search..." value={this.state.searchValue} />
-                <button onClick={this.onClickSearch}>Submit</button>
+
+                <hr />
+
+                {Tasks}
             </div>
         </div>);
     }
