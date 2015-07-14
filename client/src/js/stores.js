@@ -4,7 +4,32 @@ var Tuxxor = require('tuxxor');
 
 var R = require('ramda');
 
-console.log(R.where)
+var isRem = R.whereEq({ removed: true });
+
+var isComp = R.whereEq({ status: true });
+
+var allRem = R.filter(isRem);
+
+var allNotRem = R.reject(isRem);
+
+var allFin = R.filter(isComp);
+
+var allUnfin = R.reject(isComp);
+
+var find = function(arr) {
+    return function(prop) {
+        return function(input) {
+            var has = R.propEq(prop, input);
+            return R.filter(has, arr);
+        };
+    };
+};
+
+var sortByComp = R.sortBy(R.prop('status'));
+
+var sortByTxt = R.sortBy(R.compose(R.toLower, R.prop('txt')));
+
+var nonRemAreFin = R.compose(R.all(R.prop('complete')), allRem);
 
 var TaskStore = Tuxxor.createStore({
 
@@ -34,7 +59,7 @@ var TaskStore = Tuxxor.createStore({
             return;
         console.log("toggle:");
         console.log(value[0]);
-        this.tasks[this.tasks.indexOf(value[0])].status=this.tasks[this.tasks.indexOf(value[0])].status==0?1:0;
+        this.tasks[this.tasks.indexOf(value[0])].status=this.tasks[this.tasks.indexOf(value[0])].status==true?false:true;
         this.emit('change');
     },
     all: function()
@@ -82,34 +107,25 @@ var TaskStore = Tuxxor.createStore({
         this.emit('change');
     },
 
-    isRemoved: R.whereEq({ removed: true }),
+    isRemoved: isRem,
 
-    isComplete: R.whereEq({ status: true }),
+    isComplete: isComp,
 
-    allRemoved: R.filter(this.isRemoved),
+    allRemoved: allRem,
 
-    allNotRemoved: R.reject(this.isRemoved),
+    allNotRemoved: allNotRem,
 
-    allUnfinished: R.filter(this.isComplete),
+    allUnfinished: allUnfin,
 
-    allFinished: R.reject(this.isComplete),
+    allFinished: allFin,
 
-    search: function(arr) {
-      return function(prop) {
-            return function(input) {
-                var has = R.propEq(prop, input);
-                return R.filter(has, arr);
-            };
-        };
-    },
+    search: find,
 
-    sortByComplete: R.sortBy(R.prop('status')),
+    sortByComplete: sortByComp,
 
-    sortByText: R.sortBy(R.compose(R.toLower, R.prop('txt'))),
+    sortByText: sortByTxt,
 
-    nonRemovedAreFinished: function() {
-        return R.compose(R.all(R.prop('complete')), this.allRemoved);
-    },
+    nonRemovedAreFinished: nonRemAreFin,
 
 
     // This is our public facing get method for the store. Any

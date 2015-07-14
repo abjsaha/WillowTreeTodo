@@ -17,13 +17,18 @@ var TaskList = React.createClass({
             value2: 'Show All Finished',
             value3: 'Sort by Complete Status',
             searchFlag: false,
-            searchValue: ''
+            searchValue: '',
+            showAllFlag: true,
         };
+    },
+
+    onClickShowAll: function() {
+        this.setState({ showAllFlag: !this.state.showAllFlag });
     },
 
     onChange: function() {
         var taskText=React.findDOMNode(this.refs.input).value.trim();
-        this.setState({searchValue:taskText});
+        this.setState({ searchValue: taskText });
     },
 
     onClickSearch: function() {
@@ -33,15 +38,17 @@ var TaskList = React.createClass({
         else {
             this.setState({ searchFlag: true });
         }
+        this.setState({ showAllFlag: false });
     },
 
     onClickShowAllRemoved: function() {
         if(R.compose(R.equals('Show All Removed'), R.prop('value1'))(this.state)) {
-            this.setState({ value1: 'Show All Existing', filt: flux.stores.TaskStore.allNotRemoved });
+            this.setState({ value1: 'Show All Existing', filt: flux.stores.TaskStore.allRemoved });
         }
         else {
-            this.setState({ value1: 'Show All Removed', filt: flux.stores.TaskStore.allRemoved });
+            this.setState({ value1: 'Show All Removed', filt: flux.stores.TaskStore.allNotRemoved });
         }
+        this.setState({ showAllFlag: false });
     },
 
     onClickSort: function() {
@@ -60,6 +67,7 @@ var TaskList = React.createClass({
         else {
             this.setState({ value2: 'Show All Finished', filt2: flux.stores.TaskStore.allUnfinished });
         }
+        this.setState({ showAllFlag: false });
     },
 
     render: function() {
@@ -74,6 +82,7 @@ var TaskList = React.createClass({
         else {
             searchFilter = flux.stores.TaskStore.search(this.props.tasks)('txt')(this.state.searchValue);
         }
+        console.log(searchFilter);
         Tasks = R.compose(
                   R.compose(
                       R.compose(
@@ -84,12 +93,20 @@ var TaskList = React.createClass({
                         }), this.state.sort)
                     , this.state.filt2)
                 , this.state.filt)(searchFilter);
+        if(this.state.showAllFlag)
+            Tasks = R.compose(R.map((task) => {
+                            return <TaskItem removed={task.removed} id={task.id} status={task.status}>
+                                {task.txt}
+                            </TaskItem>
+                        }), this.state.sort)(this.props.tasks);
+        console.log(Tasks);
         return (<div className="overlay">
             <div className="list-container">
                 {Tasks}
                 <button onClick={this.onClickShowAllRemoved}>{this.state.value1}</button>
                 <button onClick={this.onClickUnfinished}>{this.state.value2}</button>
                 <button onClick={this.onClickSort}>{this.state.value3}</button>
+                <button onClick={this.onClickShowAll}>Show All</button>
             </div>
             <div className="search-bar">
                 <input ref="input" type="text" onChange={this.onChange} placeholder="Search..." value={this.state.searchValue} />
