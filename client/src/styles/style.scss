@@ -17,6 +17,7 @@
     -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+    //background-url: "http://api.thumbr.it/whitenoise-361x370.png?background=#000066ff&noise=626262&density=100&opacity=30";
     .header {
         padding: 20px;
 
@@ -28,6 +29,11 @@
             border: 1px solid #bad;
             border-radius: 5px;
             padding:5px;
+            -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+            box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            background-color: #000066;
+            background-image: linear-gradient(to bottom, #000066, #333385);
             &:hover {
                 background: #000066;
                 color: white;
@@ -41,7 +47,12 @@
             display: inline-block;
             border: 1px solid #bad;
             border-radius: 5px;
+            -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+            box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
             padding:5px;
+            background-color: #000066;
+            background-image: linear-gradient(to bottom, #000066, #333385);
             &:hover {
                 background: #000066;
                 color: white;
@@ -74,7 +85,15 @@
                     &:checked ~ span {
                         font-weight: 800;
                         color: #000066;
-                        background: #00CC66;
+                        //background: #00CC66;
+                        background: rgba(183,250,0,1);
+                        background: -moz-radial-gradient(center, ellipse cover, rgba(183,250,0,1) 0%, rgba(88,200,40,1) 52%, rgba(0,153,77,1) 100%);
+                        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(183,250,0,1)), color-stop(52%, rgba(88,200,40,1)), color-stop(100%, rgba(0,153,77,1)));
+                        background: -webkit-radial-gradient(center, ellipse cover, rgba(183,250,0,1) 0%, rgba(88,200,40,1) 52%, rgba(0,153,77,1) 100%);
+                        background: -o-radial-gradient(center, ellipse cover, rgba(183,250,0,1) 0%, rgba(88,200,40,1) 52%, rgba(0,153,77,1) 100%);
+                        background: -ms-radial-gradient(center, ellipse cover, rgba(183,250,0,1) 0%, rgba(88,200,40,1) 52%, rgba(0,153,77,1) 100%);
+                        background: radial-gradient(ellipse at center, rgba(183,250,0,1) 0%, rgba(88,200,40,1) 52%, rgba(0,153,77,1) 100%);
+                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7fa00', endColorstr='#00994d', GradientType=1 );
                         border-radius: 5px;
                     }
                 }
@@ -106,7 +125,11 @@
                 width:25%;
                 font-size: 14px;
                 margin-left: 10px;
-                background: #000066;
+                -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+                box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
+                background-color: #000066;
+                background-image: linear-gradient(to bottom, #000066, #333385);
                 &:hover {
                     background: #bad;
                     color: #000066;
@@ -135,6 +158,7 @@
             border-radius: 5px;
             border: 1px solid #bad;
             text-align: center;
+            background-image: linear-gradient(to bottom, #000066, #333385);
             .name {
                 margin-left: 10px;
                 float: left;
@@ -152,6 +176,7 @@
     }
     .add-container {
         .add-inner {
+
             .todoadd {
                 color: #000066;  
                 text-align: left;
@@ -172,12 +197,15 @@
                 text-align: center;
                 color: #bad;
                 border: 1px solid #bad;
-
+                -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+                box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
                 cursor: pointer;
                 width:15%;
                 font-size: 14px;
-                margin-left: 0px;
-                background: #000066;
+                margin-left: 5px;
+                background-color: #000066;
+                background-image: linear-gradient(to bottom, #000066, #333385);
                 &:hover {
                     background: #bad;
                     color: #000066;
@@ -190,11 +218,16 @@
                 text-align: center;
                 color: #bad;
                 border: 1px solid #bad;
-
+                -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+                box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
                 cursor: pointer;
                 width:15%;
                 font-size: 14px;
-                margin-left: 0px;
+                margin-left: 5px;
+                margin-bottom: 5px;
+                background-color: #000066;
+                background-image: linear-gradient(to bottom, #000066, #333385);
                 background: #000066;
                 &:hover {
                     background: #bad;
