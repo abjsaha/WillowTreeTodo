@@ -162,8 +162,8 @@ var TaskList = React.createClass({
                 <form onChange={this.test}>
                     <label><input ref="complete" type="checkbox" checked={this.state.filters.status} /><span>Complete</span></label>
                     <label><input ref="removed" type="checkbox" checked={this.state.filters.removed} /><span>Removed</span></label>
-                    <label><input ref="sortTxt" type="radio" name="sort" value="txt" checked={this.state.sort === 'txt'} /><span>Text</span></label>
-                    <label><input ref="sortComplete" type="radio" name="sort" value="complete" checked={this.state.sort === 'complete'} /><span>Complete</span></label>
+                    <label><input ref="sortTxt" type="radio" name="sort" value="txt" checked={this.state.sort === 'txt'} /><span className="radio">Text</span></label>
+                    <label><input ref="sortComplete" type="radio" name="sort" value="complete" checked={this.state.sort === 'complete'} /><span className="radio">Complete</span></label>
 
                     <input className="searchBar" results="5" ref="search" type="text" placeholder="Search..." value={this.state.searchValue} />
 

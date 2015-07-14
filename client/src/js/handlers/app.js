@@ -10,9 +10,11 @@ var App = React.createClass({
 
     render: function() {
         //console.log(this.props);
+        var joy= "Joy's TODO List";
         return <div className="app-container">
             <div className="header">
                 <Link className="title" to="tasks">TODO</Link>
+                <span className="joy">{joy}</span>
                 <Link className="add" to="add">
                     add
                 </Link>
