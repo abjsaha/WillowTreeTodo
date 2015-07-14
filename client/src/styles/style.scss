@@ -12,6 +12,11 @@
     background: white;
     background-color: #000066;
     background-image: linear-gradient(to bottom, #000066, #333385);
+    border: 1px solid #bad;
+    border-radius: 5px;
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
     .header {
         padding: 20px;
 
