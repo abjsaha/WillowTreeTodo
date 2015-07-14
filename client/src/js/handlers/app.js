@@ -11,7 +11,9 @@ var App = React.createClass({
     render: function() {
         //console.log(this.props);
         var joy= "Joy's TODO List";
-        return <div className="app-container">
+        return (
+           // <img src="images/bg.jpg" id="bg" alt=""/>
+            <div className="app-container">
             <div className="header">
                 <Link className="title" to="tasks">TODO</Link>
                 <span className="joy">{joy}</span>
@@ -21,7 +23,7 @@ var App = React.createClass({
             </div>
 
             <RouteHandler tasks={this.props.tasks} />
-        </div>;
+        </div>);
     }
 
 });
