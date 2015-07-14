@@ -23,7 +23,7 @@ var TaskList = React.createClass({
     },
 
     onClickShowAll: function() {
-        this.setState({ showAllFlag: !this.state.showAllFlag });
+        this.setState({ showAllFlag: !this.state.showAllFlag, searchFlag: false });
     },
 
     onChange: function() {
@@ -32,7 +32,8 @@ var TaskList = React.createClass({
     },
 
     onClickSearch: function() {
-        if(R.equals(searchValue, '')) {
+        console.log('search:',this.state.searchValue);
+        if(R.equals(this.state.searchValue, '')) {
             this.setState({ searchFlag: false });
         }
         else {
@@ -81,19 +82,22 @@ var TaskList = React.createClass({
         }
         else {
             searchFilter = flux.stores.TaskStore.search(this.props.tasks)('txt')(this.state.searchValue);
+            console.log("Search Result: ");
         }
         console.log(searchFilter);
+
         Tasks = R.compose(
-                  R.compose(
-                      R.compose(
-                        R.map((task) => {
-                            return <TaskItem removed={task.removed} id={task.id} status={task.status}>
-                                {task.txt}
-                            </TaskItem>
-                        }), this.state.sort)
-                    , this.state.filt2)
-                , this.state.filt)(searchFilter);
-        if(this.state.showAllFlag)
+            R.map((task) => {
+                return <TaskItem removed={task.removed} id={task.id} status={task.status}>
+                    {task.txt}
+                </TaskItem>
+            }),
+            this.state.sort,
+            this.state.filt2,
+            this.state.filt
+        )(searchFilter);
+
+        if(this.state.showAllFlag && !this.state.searchFlag)
             Tasks = R.compose(R.map((task) => {
                             return <TaskItem removed={task.removed} id={task.id} status={task.status}>
                                 {task.txt}
@@ -107,6 +111,14 @@ var TaskList = React.createClass({
                 <button onClick={this.onClickUnfinished}>{this.state.value2}</button>
                 <button onClick={this.onClickSort}>{this.state.value3}</button>
                 <button onClick={this.onClickShowAll}>Show All</button>
+                
+                <form>
+                <label><input type="checkbox" /> <span>Complete</span></label>
+                <label><input type="checkbox" /> <span>Removed</span></label>
+
+                <label><input type="radio" name="sort" value="txt" /> <span>Text</span></label>
+                <label><input type="radio" name="sort" value="complete" /> <span>Complete</span></label>
+                </form>
             </div>
             <div className="search-bar">
                 <input ref="input" type="text" onChange={this.onChange} placeholder="Search..." value={this.state.searchValue} />

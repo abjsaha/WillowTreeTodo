@@ -20,7 +20,8 @@ var find = function(arr) {
     return function(prop) {
         return function(input) {
             var has = R.propEq(prop, input);
-            return R.filter(has, arr);
+            console.log('------------------', arr, prop, input, R.filter(has, arr))
+            return R.filter(R.compose(R.test(new RegExp(input, 'i')), R.prop(prop)), arr);
         };
     };
 };
