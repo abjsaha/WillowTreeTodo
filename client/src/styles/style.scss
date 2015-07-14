@@ -138,7 +138,7 @@ html {
                     display: inline-block;
                     border: 1px solid #000066;
                     border-radius: 5px;
-                    &:checked ~ span:not(.radio) {
+                    &:checked ~ .other {
                         font-weight: 800;
                         color: #000066;
                         //background: #00CC66;
@@ -165,19 +165,46 @@ html {
                         border-radius: 5px;
                         font-weight: 800;
                     }
-                }
 
-                span:not(.radio) {
+                    &:checked ~ .all {
+                        background: rgba(176,29,3,1);
+                        background: -moz-linear-gradient(top, rgba(176,29,3,1) 0%, rgba(200,32,9,1) 0%, rgba(168,20,0,1) 51%, rgba(168,17,0,1) 71%, rgba(148,12,0,1) 100%);
+                        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(176,29,3,1)), color-stop(0%, rgba(200,32,9,1)), color-stop(51%, rgba(168,20,0,1)), color-stop(71%, rgba(168,17,0,1)), color-stop(100%, rgba(148,12,0,1)));
+                        background: -webkit-linear-gradient(top, rgba(176,29,3,1) 0%, rgba(200,32,9,1) 0%, rgba(168,20,0,1) 51%, rgba(168,17,0,1) 71%, rgba(148,12,0,1) 100%);
+                        background: -o-linear-gradient(top, rgba(176,29,3,1) 0%, rgba(200,32,9,1) 0%, rgba(168,20,0,1) 51%, rgba(168,17,0,1) 71%, rgba(148,12,0,1) 100%);
+                        background: -ms-linear-gradient(top, rgba(176,29,3,1) 0%, rgba(200,32,9,1) 0%, rgba(168,20,0,1) 51%, rgba(168,17,0,1) 71%, rgba(148,12,0,1) 100%);
+                        background: linear-gradient(to bottom, rgba(176,29,3,1) 0%, rgba(200,32,9,1) 0%, rgba(168,20,0,1) 51%, rgba(168,17,0,1) 71%, rgba(148,12,0,1) 100%);
+                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b01d03', endColorstr='#940c00', GradientType=0 );
+                        border-radius: 5px;
+                        font-weight: 800;
+                        color: white;
+                    }
+                }
+                
+                .other {
                     color: #00CC66;
                     margin: 5px;
                     padding: 5px;
                     display: inline-block;
                     border: 1px solid #000066;
                     border-radius: 5px;
-                    margin-left: 25px;
+                    margin-left: 20px;
                     margin-right: auto;
                     text-align: center;
-                    font-size: 18px;
+                    font-size: 16px;
+                    background: #000066;
+                }
+                .all {
+                    color: #c21c0a;
+                    margin: 5px;
+                    padding: 5px;
+                    display: inline-block;
+                    border: 1px solid #000066;
+                    border-radius: 5px;
+                    margin-left: 20px;
+                    margin-right: auto;
+                    text-align: center;
+                    font-size: 16px;
                     background: #000066;
                 }
                 .radio {
@@ -187,10 +214,10 @@ html {
                     display: inline-block;
                     border: 1px solid #000066;
                     border-radius: 5px;
-                    margin-left: 25px;
+                    margin-left: 20px;
                     margin-right: auto;
                     text-align: center;
-                    font-size: 18px;
+                    font-size: 16px;
                     background: #000066;
                 }
             }

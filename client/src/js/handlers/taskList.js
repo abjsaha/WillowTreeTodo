@@ -18,6 +18,7 @@ var TaskList = React.createClass({
             //searchFlag: false,
             //searchValue: '',
             //showAllFlag: true,
+            allTasks: true,
             searchValue: '',
             filters: {
                 status: false,
@@ -77,19 +78,30 @@ var TaskList = React.createClass({
     },
 
     test: function() {
+        if(React.findDOMNode(this.refs.complete).checked!==this.state.filters.status||React.findDOMNode(this.refs.removed).checked!==this.state.filters.removed)
+        {
+            React.findDOMNode(this.refs.all).checked=false;
+        }
+        else if(React.findDOMNode(this.refs.all).checked!==this.state.allTasks)
+        {
+            React.findDOMNode(this.refs.removed).checked=false;
+            React.findDOMNode(this.refs.complete).checked=false;
+        }
+        //All
+        var all = React.findDOMNode(this.refs.all).checked;
         // Filters
         var filters = {
             status: React.findDOMNode(this.refs.complete).checked,
             removed: React.findDOMNode(this.refs.removed).checked
         };
-
+        // Search
+        var searchValue = React.findDOMNode(this.refs.search).value;
+       
         // Sorts
         var sort = React.findDOMNode(this.refs.sortTxt).checked ?  'txt' : 'complete';
 
-        // Search
-        var searchValue = React.findDOMNode(this.refs.search).value;
-
         this.setState({
+            allTasks: all,
             filters: filters,
             sort: sort,
             searchValue: searchValue
@@ -110,20 +122,38 @@ var TaskList = React.createClass({
         var sortComparator = R.compose(R.toLower, R.toString, R.prop(this.state.sort));
 
 
-        var Tasks = R.compose(
-            // Map the task to a Component
-            R.map((task) => {
-                return <TaskItem removed={task.removed} id={task.id} status={task.status}>
-                    {task.txt}
-                </TaskItem>
-            }),
-            // Sort the todos
-            R.sortBy(sortComparator),
-            // Filter the todos
-            R.filter(filterPredicate),
-            // Search the todos
-            R.filter(searchPredicate)
-        )(this.props.tasks);
+        var Tasks;
+        if(!this.state.allTasks) {
+            Tasks = R.compose(
+                // Map the task to a Component
+                R.map((task) => {
+                    return <TaskItem removed={task.removed} id={task.id} status={task.status}>
+                        {task.txt}
+                    </TaskItem>
+                }),
+                // Sort the todos
+                R.sortBy(sortComparator),
+                // Filter the todos
+                R.filter(filterPredicate),
+                // Search the todos
+                R.filter(searchPredicate)
+            )(this.props.tasks);
+        }
+        else {
+            Tasks = R.compose(
+                // Map the task to a Component
+                R.map((task) => {
+                    return <TaskItem removed={task.removed} id={task.id} status={task.status}>
+                        {task.txt}
+                    </TaskItem>
+                }),
+                // Sort the todos
+                R.sortBy(sortComparator),
+                // Search the todos
+                R.filter(searchPredicate)
+                )(this.props.tasks);
+        }
+
 
         //console.log("Props in taskslist : ");
         //console.log(this.props.tasks);
@@ -160,8 +190,9 @@ var TaskList = React.createClass({
         return (<div className="overlay">
             <div className="list-container">
                 <form onChange={this.test}>
-                    <label><input ref="complete" type="checkbox" checked={this.state.filters.status} /><span>Complete</span></label>
-                    <label><input ref="removed" type="checkbox" checked={this.state.filters.removed} /><span>Removed</span></label>
+                    <label><input ref="all" type="checkbox" checked={this.state.allTasks} /><span className="all">All</span></label>
+                    <label><input ref="complete" type="checkbox" checked={this.state.filters.status} /><span className="other">Complete</span></label>
+                    <label><input ref="removed" type="checkbox" checked={this.state.filters.removed} /><span className="other">Removed</span></label>
                     <label><input ref="sortTxt" type="radio" name="sort" value="txt" checked={this.state.sort === 'txt'} /><span className="radio">Text</span></label>
                     <label><input ref="sortComplete" type="radio" name="sort" value="complete" checked={this.state.sort === 'complete'} /><span className="radio">Complete</span></label>
 
