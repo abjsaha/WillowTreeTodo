@@ -6,16 +6,41 @@
 @import "base/base.page";
 
 .app-container {
-
     width: 500px;
     margin: 20px auto;
-
+    font-family: "Courier New";
+    background: white;
+    background-color: #000066;
+    background-image: linear-gradient(to bottom, #000066, #333385);
     .header {
         padding: 20px;
 
-        .title {}
+        .title {
+            text-decoration:none;
+            cursor: pointer;
+            color: #bad;
+            display: inline-block;
+            border: 1px solid #bad;
+            border-radius: 5px;
+            padding:5px;
+            &:hover {
+                background: #000066;
+                color: white;
+            }
+        }
         .add {
+            text-decoration:none;
+            cursor: pointer;
             float: right;
+            color: #bad;
+            display: inline-block;
+            border: 1px solid #bad;
+            border-radius: 5px;
+            padding:5px;
+            &:hover {
+                background: #000066;
+                color: white;
+            }
         }
     }
 
@@ -27,27 +52,40 @@
             label {
                 position: relative;
                 cursor: pointer;
-
+                margin-left: auto;
+                margin-right: auto;
+                display: inline-block;
                 input {
                     position: absolute;
                     top: 0; left: 0; right: 0; bottom: 0;
                     width: 100%; height: 100%;
                     opacity: 0;
                     cursor: pointer;
-
+                    margin-left: auto;
+                    margin-right: auto;
+                    display: inline-block;
+                    border: 1px solid #000066;
+                    border-radius: 5px;
                     &:checked ~ span {
                         font-weight: 800;
-                        color: white;
-                        background: #bad;
+                        color: #000066;
+                        background: #00CC66;
                         border-radius: 5px;
                     }
                 }
 
                 span {
-                    color: #bad;
+                    color: #00CC66;
                     margin: 5px;
                     padding: 5px;
                     display: inline-block;
+                    border: 1px solid #000066;
+                    border-radius: 5px;
+                    margin-left: 25px;
+                    margin-right: auto;
+                    text-align: center;
+                    font-size: 18px;
+                    background: #000066;
                 }
             }
 
@@ -55,27 +93,109 @@
                 display: inline-block;
                 padding: 3px;
                 border-radius: 5px;
-
+                text-align: center;
                 color: #bad;
                 border: 1px solid #bad;
 
                 cursor: pointer;
-
-                font-size: 16px;
-
+                width:25%;
+                font-size: 14px;
+                margin-left: 10px;
+                background: #000066;
                 &:hover {
                     background: #bad;
-                    color: white;
+                    color: #000066;
                 }
+            }
+            .searchBar {
+                color: #000066;  
+                text-align: right;
+                cursor: pointer;
+                display: inline-block; 
+                margin-left: 25px;
+                margin-right: 0px;
+                width: 61%; 
+                letter-spacing: 2px;        
+                //text-shadow: 0 0 1px black;       
+                word-spacing: 10px;  
+                font-size: 16px;
             }
         }
 
-        .todo {
-            padding: 20px;
 
-            .name {}
-            .status {}
-            .remove {}
+        .todo {
+            padding: 10px;
+            margin-left: 100px;
+            margin-right: 100px;
+            border-radius: 5px;
+            border: 1px solid #bad;
+            text-align: center;
+            .name {
+                margin-left: 10px;
+                float: left;
+                color: #ccc;
+            }
+            .status {
+                color: #ccc;
+            }
+            .remove {
+                margin-right: 10px;
+                float: right;
+                color: #ccc;
+            }
+        }
+    }
+    .add-container {
+        .add-inner {
+            .todoadd {
+                color: #000066;  
+                text-align: left;
+                cursor: pointer;
+                display: inline-block; 
+                width: 50%; 
+                letter-spacing: 2px;        
+                //text-shadow: 0 0 1px black;       
+                word-spacing: 10px;  
+                margin-left: 40px;
+                font-size: 16px;
+            }
+            .cancel {
+                text-decoration: none;
+                display: inline-block;
+                padding: 3px;
+                border-radius: 5px;
+                text-align: center;
+                color: #bad;
+                border: 1px solid #bad;
+
+                cursor: pointer;
+                width:15%;
+                font-size: 14px;
+                margin-left: 0px;
+                background: #000066;
+                &:hover {
+                    background: #bad;
+                    color: #000066;
+                }
+            }
+           .save {
+                display: inline-block;
+                padding: 3px;
+                border-radius: 5px;
+                text-align: center;
+                color: #bad;
+                border: 1px solid #bad;
+
+                cursor: pointer;
+                width:15%;
+                font-size: 14px;
+                margin-left: 0px;
+                background: #000066;
+                &:hover {
+                    background: #bad;
+                    color: #000066;
+                }
+            }
         }
     }
 }

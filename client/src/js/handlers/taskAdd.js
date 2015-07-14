@@ -38,7 +38,7 @@ var TaskAdd = React.createClass({
     render: function() {
         return <div className="add-container">
             <div className="add-inner">
-                <input ref="input" type="text" onChange={this.onChange} placeholder="Todo:" value={this.state.value} />
+                <input className="todoadd" ref="input" type="text" onChange={this.onChange} placeholder="Todo:" value={this.state.value} />
                 <Link className="cancel" to="tasks">Cancel</Link>
                 <span className="a save" onClick={this.onSubmit}>Save</span>
             </div>

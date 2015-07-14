@@ -4,7 +4,6 @@ var React = require('react');
 var { flux } = require('flux');
 var TaskItem = require('handlers/taskItem');
 var R = require('ramda');
-var Test = require('handlers/test');
 
 var TaskList = React.createClass({
 
@@ -166,7 +165,7 @@ var TaskList = React.createClass({
                     <label><input ref="sortTxt" type="radio" name="sort" value="txt" checked={this.state.sort === 'txt'} /><span>Text</span></label>
                     <label><input ref="sortComplete" type="radio" name="sort" value="complete" checked={this.state.sort === 'complete'} /><span>Complete</span></label>
 
-                    <input ref="search" type="text" placeholder="Search..." value={this.state.searchValue} />
+                    <input className="searchBar" results="5" ref="search" type="text" placeholder="Search..." value={this.state.searchValue} />
 
                     <span className="clear" onClick={this.clearAll}>Clear Filters</span>
                 </form>
